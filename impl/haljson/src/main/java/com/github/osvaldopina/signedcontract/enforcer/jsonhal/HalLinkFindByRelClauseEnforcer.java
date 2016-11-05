@@ -11,11 +11,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class HalLinkClauseEnforcer extends BranchClauseEnforcer<JsonNode, JsonNode> {
+public class HalLinkFindByRelClauseEnforcer extends BranchClauseEnforcer<JsonNode, JsonNode>
+        implements HalLinksClauseEnforcer {
 
     private String rel;
 
-    public HalLinkClauseEnforcer(String rel, List<? extends HalLinkPropertyClauseEnforcer> subClauses) {
+    public HalLinkFindByRelClauseEnforcer(String rel, List<? extends HalLinkPropertyClauseEnforcer> subClauses) {
         super(subClauses);
         for(HalLinkPropertyClauseEnforcer halLinkPropertyClauseEnforcer:subClauses) {
            if (halLinkPropertyClauseEnforcer instanceof Rel) {

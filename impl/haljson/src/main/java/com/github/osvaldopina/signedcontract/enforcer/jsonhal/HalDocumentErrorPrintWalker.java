@@ -7,38 +7,36 @@ import com.github.osvaldopina.signedcontract.enforcer.EnforcementError;
 import com.github.osvaldopina.signedcontract.enforcer.uritemplate.UriTemplatedVariableClauseEnforcer;
 import com.github.osvaldopina.signedcontract.enforcer.walker.ClauseWalker;
 
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class HalDocumentErrorPrintWalker implements ClauseWalker {
 
-    private PrintStream printStream;
+    private PrintWriter printWriter;
 
 
-    public HalDocumentErrorPrintWalker(PrintStream printStream) {
-        this.printStream = printStream;
+    public HalDocumentErrorPrintWalker(PrintWriter printWriter) {
+        this.printWriter = printWriter;
     }
 
 
     @Override
     public void walk(Clause<?> clause) {
-//        System.out.println("┘├ └ |");
-//        System.out.println("┘│├ └ |");
-        walk(clause,0, printStream);
+        walk(clause,0, printWriter);
     }
 
-    private void walk(Clause<?> clause, int level, PrintStream printStream) {
+    private void walk(Clause<?> clause, int level, PrintWriter printWriter) {
         for(String str: getClauseStringRepresentation(clause)) {
-            printStream.print(levelPad(level));
-            printStream.print(str);
-            printStream.print("\n");
+            printWriter.print(levelPad(level));
+            printWriter.print(str);
+            printWriter.print("\n");
         }
         if (clause instanceof BranchClause) {
             BranchClause<?, ?> branchClause = (BranchClause<?, ?>) clause;
             for (Clause<?> subClause : branchClause.getSubClauses()) {
-                walk(subClause, level+1, printStream);
+                walk(subClause, level+1, printWriter);
             }
         }
     }
@@ -78,9 +76,9 @@ public class HalDocumentErrorPrintWalker implements ClauseWalker {
 
             }
         }
-        else if (clause.getEnforcer() instanceof HalLinkClauseEnforcer) {
+        else if (clause.getEnforcer() instanceof HalLinkFindByRelClauseEnforcer) {
             if (clause.getErrors().isEmpty()) {
-                return Arrays.asList("link [" + ((HalLinkClauseEnforcer) clause.getEnforcer()).getRel() + "]");
+                return Arrays.asList("link [" + ((HalLinkFindByRelClauseEnforcer) clause.getEnforcer()).getRel() + "]");
             }
             else {
                 return getErrorListAsString(clause);
