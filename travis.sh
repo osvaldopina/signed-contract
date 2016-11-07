@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "start!!!!!!!"
+
 #
 #
 #  Check, in pom.xml, if current version is

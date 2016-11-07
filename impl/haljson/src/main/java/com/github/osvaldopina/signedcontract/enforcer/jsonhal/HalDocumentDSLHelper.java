@@ -28,12 +28,16 @@ public class HalDocumentDSLHelper {
         }
     }
 
-    public static HalLinkListClauseEnforcer links(HalLinkClauseEnforcer... halLinkClauseEnforcers) {
+    public static HalLinkListClauseEnforcer links(HalLinksClauseEnforcer... halLinkClauseEnforcers) {
         return new HalLinkListClauseEnforcer(Arrays.asList(halLinkClauseEnforcers));
     }
 
     public static HalResourceClauseEnforcer resource(JsonPathClauseEnforcer... jsonPathClauseEnforcers) {
         return new HalResourceClauseEnforcer(Arrays.asList(jsonPathClauseEnforcers));
+    }
+
+    public static HalDocumentPartClauseEnforcer emptyResource() {
+        return new HalEmptyResourceClauseEnforcer();
     }
 
     public static <E extends HalDocumentPartClauseEnforcer> HalEmbeddedListClauseEnforcer embeds(HalBaseEmbeddedResourceClauseEnforcer... subDocuments) {
@@ -52,8 +56,19 @@ public class HalDocumentDSLHelper {
         return new HalEmbeddedArrayItemClauseEnforcer(Arrays.asList(subDocuments));
     }
 
-    public static <E extends HalLinkPropertyClauseEnforcer> HalLinkClauseEnforcer link(String rel, E... linkPropertyClauses) {
-        return new HalLinkClauseEnforcer(rel, Arrays.asList(linkPropertyClauses));
+    public static HalDocumentPartClauseEnforcer emptyEmbedded() {
+        return new HalEmptyEmbeddedClauseEnforcer();
+    }
+
+
+
+    public static HalLinkCountClauseEnforcer linkCount(int linkCount) {
+        return new HalLinkCountClauseEnforcer(linkCount);
+    }
+
+
+    public static <E extends HalLinkPropertyClauseEnforcer> HalLinkFindByRelClauseEnforcer link(String rel, E... linkPropertyClauses) {
+        return new HalLinkFindByRelClauseEnforcer(rel, Arrays.asList(linkPropertyClauses));
     }
 
     public static HalLinkValidRelClauseEnforcer validRel() {
@@ -64,17 +79,21 @@ public class HalDocumentDSLHelper {
         return new HalLinkValidHRefClauseEnforcer();
     }
 
+    public static HalLinkPropertyClauseEnforcer href(String href) {
+        return new HalLinkHRefClauseEnforcer(href);
+    }
+
     public static HalLinkPropertyClauseEnforcer templated(UriTemplatedVariableClauseEnforcer... variables) {
 
         return new HalLinkPropertyAggregatorClause(Arrays.asList(
-                new HalLinkPropertyValueClauseEnforcer("templated", "true"),
+                new HalLinkPropertyValueClauseEnforcer("templated", true),
                 new HalLinkTemplatedUriClauseEnforcer(Arrays.asList(variables))
 
         ));
     }
 
     public static HalLinkPropertyClauseEnforcer notTemplated() {
-        return new HalLinkPropertyValueClauseEnforcer("templated", "false", false);
+        return new HalLinkPropertyValueClauseEnforcer("templated", false, false);
     }
 
     public static HalLinkPropertyClauseEnforcer hasName(String name) {

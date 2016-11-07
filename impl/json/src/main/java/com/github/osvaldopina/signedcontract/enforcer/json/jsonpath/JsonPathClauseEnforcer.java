@@ -23,6 +23,7 @@ public abstract class JsonPathClauseEnforcer extends LeafClauseEnforcer<JsonNode
     protected final List<EnforcementError> enforceClause(JsonNode documentClause) {
 
         try {
+
             Object value = JsonPath.read(documentClause.toString(), path);
 
             return validate(value);

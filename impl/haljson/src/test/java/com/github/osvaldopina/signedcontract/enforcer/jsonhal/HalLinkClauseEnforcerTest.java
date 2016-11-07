@@ -12,11 +12,11 @@ import static org.junit.Assert.*;
 public class HalLinkClauseEnforcerTest {
 
 
-    private HalLinkClauseEnforcer halLinkClauseEnforcer;
+    private HalLinkFindByRelClauseEnforcer halLinkClauseEnforcer;
 
     @Test
     public void enforce() throws Exception {
-        halLinkClauseEnforcer = new HalLinkClauseEnforcer("rel", Collections.EMPTY_LIST);
+        halLinkClauseEnforcer = new HalLinkFindByRelClauseEnforcer("rel", Collections.EMPTY_LIST);
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -30,7 +30,7 @@ public class HalLinkClauseEnforcerTest {
 
     @Test
     public void enforceLinkNotFound() throws Exception {
-        halLinkClauseEnforcer = new HalLinkClauseEnforcer("rel", Collections.EMPTY_LIST);
+        halLinkClauseEnforcer = new HalLinkFindByRelClauseEnforcer("rel", Collections.EMPTY_LIST);
 
         ObjectMapper mapper = new ObjectMapper();
 
