@@ -19,14 +19,19 @@ public class JsonPathValueClauseEnforcer extends JsonPathClauseEnforcer {
     protected List<EnforcementError> validate(Object actual) {
 
         if (actual == null) {
-            return Arrays.asList(new EnforcementError(
-                    new StringBuilder()
-                            .append("Was expecting ")
-                            .append(JsonValuePrinter.print(expected))
-                            .append(" for json path ")
-                            .append(getPath())
-                            .append(" but the path was not found in json document")
-                            .toString()));
+            if (expected != null) {
+                return Arrays.asList(new EnforcementError(
+                        new StringBuilder()
+                                .append("Was expecting ")
+                                .append(JsonValuePrinter.print(expected))
+                                .append(" for json path ")
+                                .append(getPath())
+                                .append(" but it was null")
+                                .toString()));
+            }
+            else {
+                return Collections.emptyList();
+            }
         }
         else if (!actual.equals(expected)) {
             return Arrays.asList(new EnforcementError(

@@ -14,6 +14,10 @@ public class JsonPathDSLHelper {
         return new JsonPathValueClauseEnforcer(jsonPath, value);
     }
 
+    public static JsonPathValueClauseEnforcer isNull(String jsonPath) {
+        return new JsonPathValueClauseEnforcer(jsonPath, null);
+    }
+
     public static JsonPathTypeClauseEnforcer isString(String jsonPath) {
         return new JsonPathTypeClauseEnforcer(jsonPath, JSON_TYPE.STRING);
     }

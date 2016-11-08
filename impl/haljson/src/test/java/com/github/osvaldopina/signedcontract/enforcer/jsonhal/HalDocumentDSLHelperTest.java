@@ -6,6 +6,8 @@ import com.github.osvaldopina.signedcontract.enforcer.CloneErrorOnlyFilter;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.PrintWriter;
+
 import static com.github.osvaldopina.signedcontract.enforcer.json.jsonpath.JsonPathDSLHelper.is;
 import static com.github.osvaldopina.signedcontract.enforcer.jsonhal.HalDocumentDSLHelper.*;
 
@@ -111,7 +113,8 @@ public class HalDocumentDSLHelperTest {
                         )
                 );
 
-        HalDocumentErrorPrintWalker halDocumentErrorPrintWalker = new HalDocumentErrorPrintWalker(System.out);
+        HalDocumentErrorPrintWalker halDocumentErrorPrintWalker =
+                new HalDocumentErrorPrintWalker(new PrintWriter(System.out));
 
         Clause<JsonNode> onlyErrors = halDocument.cloneClause(CloneErrorOnlyFilter.INSTANCE);
 

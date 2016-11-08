@@ -1,7 +1,6 @@
 package com.github.osvaldopina.signedcontract.enforcer.jsonhal;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.github.osvaldopina.signedcontract.enforcer.BranchClauseEnforcer;
 import com.github.osvaldopina.signedcontract.enforcer.ClauseEnforcer;
 import com.github.osvaldopina.signedcontract.enforcer.EnforcementError;
@@ -9,24 +8,23 @@ import com.github.osvaldopina.signedcontract.enforcer.Navigator;
 import com.github.osvaldopina.signedcontract.enforcer.json.navigator.JsonArrayItemNavigator;
 import com.github.osvaldopina.signedcontract.enforcer.json.navigator.JsonStayPutNavigator;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HalEmbeddedArrayItemClauseEnforcer extends BranchClauseEnforcer<JsonNode, JsonNode>
+public class HalEmbeddedArrayItemCountClauseEnforcer extends BranchClauseEnforcer<JsonNode, JsonNode>
         implements HalEmbeddedArrayItemBaseClauseEnforcer {
 
-    private int index;
+    int arrayItemCount;
 
-    private String rel;
-
-    public HalEmbeddedArrayItemClauseEnforcer(List<? extends HalEmbeddedPartClauseEnforcer> subClauseEnforcers) {
-        super(subClauseEnforcers);
+    public HalEmbeddedArrayItemCountClauseEnforcer(int arrayItemCount) {
+        super(Collections.EMPTY_LIST);
+        this.arrayItemCount = arrayItemCount;
     }
 
     @Override
     protected Navigator<JsonNode, JsonNode> createNavigator() {
-        return new JsonArrayItemNavigator(index);
+        return new JsonStayPutNavigator();
     }
 
     @Override
@@ -36,32 +34,25 @@ public class HalEmbeddedArrayItemClauseEnforcer extends BranchClauseEnforcer<Jso
 
     @Override
     protected List<EnforcementError> enforceClause(JsonNode documentClause) {
-        return Collections.EMPTY_LIST;
-    }
+        List<EnforcementError> errors = new ArrayList<EnforcementError>();
 
-    public int getIndex() {
-        return index;
+        if (documentClause.size() != arrayItemCount) {
+            errors.add(new EnforcementError("Was expecting to have " + arrayItemCount +
+                    " array item(s) but _embedded has " +
+                    documentClause.size() + " array item(s)."));
+        }
+
+        return errors;
     }
 
     public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public String getRel() {
-        return rel;
     }
 
     public void setRel(String rel) {
-        this.rel = rel;
-        for(ClauseEnforcer<JsonNode> subClause:getSubClauseEnforcers()) {
-            if (subClause instanceof Rel) {
-                ((Rel) subClause).setRel(rel);
-            }
-        }
     }
 
     @Override
     public boolean consumesIndex() {
-        return true;
+        return false;
     }
 }

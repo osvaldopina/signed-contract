@@ -90,8 +90,40 @@ public class JsonPathValueClauseEnforcerTest {
         Clause<JsonNode> clause = jsonPathValueClauseEnforcer.enforce(root);
 
         assertEquals(1, clause.getErrors().size());
-        assertEquals("Was expecting [\"prop1-value\"] for json path $.prop1 but the path was not found in json document",
+        assertEquals("Was expecting [\"prop1-value\"] for json path $.prop1 but it was null",
                 clause.getErrors().get(0).toString());
+
+    }
+
+    @Test
+    public void validateNull() throws Exception {
+
+        jsonPathValueClauseEnforcer = new JsonPathValueClauseEnforcer("$.prop1", null);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        JsonNode root = mapper.readTree("{ \"prop1\" : null }");
+
+        Clause<JsonNode> clause = jsonPathValueClauseEnforcer.enforce(root);
+
+        assertEquals(0, clause.getErrors().size());
+    }
+
+    @Test
+    public void validateNullValueForNotNullExpected() throws Exception {
+
+        jsonPathValueClauseEnforcer = new JsonPathValueClauseEnforcer("$.prop1", "125");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        JsonNode root = mapper.readTree("{ \"prop1\" : null }");
+
+        Clause<JsonNode> clause = jsonPathValueClauseEnforcer.enforce(root);
+
+        assertEquals(1, clause.getErrors().size());
+        assertEquals("Was expecting [\"125\"] for json path $.prop1 but it was null",
+                clause.getErrors().get(0).toString());
+        ;
 
     }
 }

@@ -18,12 +18,16 @@ public class HalEmbeddedArrayClauseEnforcer extends HalBaseEmbeddedResourceClaus
 
     private String rel;
 
-    public HalEmbeddedArrayClauseEnforcer(String rel, List<HalEmbeddedArrayItemClauseEnforcer> subClauseEnforcers) {
+    public HalEmbeddedArrayClauseEnforcer(String rel, List<? extends HalEmbeddedArrayItemBaseClauseEnforcer> subClauseEnforcers) {
         super(subClauseEnforcers);
         this.rel = rel;
-        for(int i=0; i< subClauseEnforcers.size(); i++) {
-            subClauseEnforcers.get(i).setIndex(i);
-            subClauseEnforcers.get(i).setRel(rel);
+        int i =0;
+        for(HalEmbeddedArrayItemBaseClauseEnforcer subClauseEnforcer: subClauseEnforcers) {
+            if (subClauseEnforcer.consumesIndex()) {
+                subClauseEnforcer.setIndex(i);
+                subClauseEnforcer.setRel(rel);
+                i++;
+            }
         }
     }
 

@@ -25,12 +25,12 @@ public class HalEmbeddedArrayClauseEnforcerTest extends EasyMockSupport {
     public Clause<JsonNode> subClause;
 
     @Mock
-    HalEmbeddedArrayItemClauseEnforcer halEmbeddedArrayItemClauseEnforcer;
+    HalEmbeddedArrayItemBaseClauseEnforcer halEmbeddedArrayItemBaseClauseEnforcer;
 
     private HalEmbeddedArrayClauseEnforcer halEmbeddedArrayClauseEnforcer;
 
     @Test
-    public void enforce() throws Exception {
+    public void enforceConsumeIndex() throws Exception {
 
         String json = "{ \"rel\": [  ] }";
 
@@ -38,17 +38,19 @@ public class HalEmbeddedArrayClauseEnforcerTest extends EasyMockSupport {
 
         JsonNode document = mapper.readTree(json);
 
-        halEmbeddedArrayItemClauseEnforcer.setRel("rel");
+        EasyMock.expect(halEmbeddedArrayItemBaseClauseEnforcer.consumesIndex()).andReturn(true);
+
+        halEmbeddedArrayItemBaseClauseEnforcer.setRel("rel");
         EasyMock.expectLastCall();
 
-        halEmbeddedArrayItemClauseEnforcer.setIndex(0);
+        halEmbeddedArrayItemBaseClauseEnforcer.setIndex(0);
         EasyMock.expectLastCall();
 
-        EasyMock.expect(halEmbeddedArrayItemClauseEnforcer.enforceClause(document.get("rel"))).andReturn(Collections.EMPTY_LIST);
+        EasyMock.expect(halEmbeddedArrayItemBaseClauseEnforcer.enforce(document.get("rel"))).andReturn(subClause);
 
         replayAll();
 
-        halEmbeddedArrayClauseEnforcer = new HalEmbeddedArrayClauseEnforcer("rel", Arrays.asList(halEmbeddedArrayItemClauseEnforcer));
+        halEmbeddedArrayClauseEnforcer = new HalEmbeddedArrayClauseEnforcer("rel", Arrays.asList(halEmbeddedArrayItemBaseClauseEnforcer));
 
         Clause<JsonNode> halDocumentClause  = halEmbeddedArrayClauseEnforcer.enforce(document);
 
@@ -59,6 +61,32 @@ public class HalEmbeddedArrayClauseEnforcerTest extends EasyMockSupport {
     }
 
     @Test
+    public void enforceConsumeNoIndex() throws Exception {
+
+        String json = "{ \"rel\": [  ] }";
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        JsonNode document = mapper.readTree(json);
+
+        EasyMock.expect(halEmbeddedArrayItemBaseClauseEnforcer.consumesIndex()).andReturn(false);
+
+        EasyMock.expect(halEmbeddedArrayItemBaseClauseEnforcer.enforce(document.get("rel"))).andReturn(subClause);
+
+        replayAll();
+
+        halEmbeddedArrayClauseEnforcer = new HalEmbeddedArrayClauseEnforcer("rel", Arrays.asList(halEmbeddedArrayItemBaseClauseEnforcer));
+
+        Clause<JsonNode> halDocumentClause  = halEmbeddedArrayClauseEnforcer.enforce(document);
+
+        verifyAll();
+
+        assertTrue(halDocumentClause.getErrors().isEmpty());
+
+    }
+
+
+    @Test
     public void enforceRelNotFound() throws Exception {
         String json = "{ \"other-rel\": [  ] }";
 
@@ -66,15 +94,17 @@ public class HalEmbeddedArrayClauseEnforcerTest extends EasyMockSupport {
 
         JsonNode document = mapper.readTree(json);
 
-        halEmbeddedArrayItemClauseEnforcer.setRel("rel");
+        EasyMock.expect(halEmbeddedArrayItemBaseClauseEnforcer.consumesIndex()).andReturn(true);
+
+        halEmbeddedArrayItemBaseClauseEnforcer.setRel("rel");
         EasyMock.expectLastCall();
 
-        halEmbeddedArrayItemClauseEnforcer.setIndex(0);
+        halEmbeddedArrayItemBaseClauseEnforcer.setIndex(0);
         EasyMock.expectLastCall();
 
         replayAll();
 
-        halEmbeddedArrayClauseEnforcer = new HalEmbeddedArrayClauseEnforcer("rel", Arrays.asList(halEmbeddedArrayItemClauseEnforcer));
+        halEmbeddedArrayClauseEnforcer = new HalEmbeddedArrayClauseEnforcer("rel", Arrays.asList(halEmbeddedArrayItemBaseClauseEnforcer));
 
         Clause<JsonNode> halDocumentClause  = halEmbeddedArrayClauseEnforcer.enforce(document);
 
@@ -93,15 +123,17 @@ public class HalEmbeddedArrayClauseEnforcerTest extends EasyMockSupport {
 
         JsonNode document = mapper.readTree(json);
 
-        halEmbeddedArrayItemClauseEnforcer.setRel("rel");
+        EasyMock.expect(halEmbeddedArrayItemBaseClauseEnforcer.consumesIndex()).andReturn(true);
+
+        halEmbeddedArrayItemBaseClauseEnforcer.setRel("rel");
         EasyMock.expectLastCall();
 
-        halEmbeddedArrayItemClauseEnforcer.setIndex(0);
+        halEmbeddedArrayItemBaseClauseEnforcer.setIndex(0);
         EasyMock.expectLastCall();
 
         replayAll();
 
-        halEmbeddedArrayClauseEnforcer = new HalEmbeddedArrayClauseEnforcer("rel", Arrays.asList(halEmbeddedArrayItemClauseEnforcer));
+        halEmbeddedArrayClauseEnforcer = new HalEmbeddedArrayClauseEnforcer("rel", Arrays.asList(halEmbeddedArrayItemBaseClauseEnforcer));
 
         Clause<JsonNode> halDocumentClause  = halEmbeddedArrayClauseEnforcer.enforce(document);
 

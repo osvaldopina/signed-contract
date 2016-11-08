@@ -13,7 +13,7 @@ import java.util.List;
 public class HalLinkListClauseEnforcer extends  HalDocumentPartClauseEnforcer implements HalEmbeddedPartClauseEnforcer {
 
 
-    public HalLinkListClauseEnforcer(List<HalLinkClauseEnforcer> subClauses) {
+    public HalLinkListClauseEnforcer(List<HalLinksClauseEnforcer> subClauses) {
         super(subClauses);
     }
 
