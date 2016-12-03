@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.github.osvaldopina</groupId>
         <artifactId>signed-contract-parent</artifactId>
-        <version>0.0.5-SNAPSHOT</version>
+        <version>0.0.5</version>
     </parent>
 
     <groupId>com.github.osvaldopina</groupId>
     <artifactId>signed-contract-impl</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.5</version>
     <name>signed-contract-impl</name>
     <packaging>pom</packaging>
     <description>Signed contract implementation</description>
