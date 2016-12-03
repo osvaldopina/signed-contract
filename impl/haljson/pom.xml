@@ -5,28 +5,28 @@
     <parent>
         <groupId>com.github.osvaldopina</groupId>
         <artifactId>signed-contract-impl</artifactId>
-        <version>0.0.3</version>
+        <version>0.0.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>signed-contract-haljson</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
     <description>Signed contract for hal json</description>
 
     <dependencies>
         <dependency>
             <groupId>com.github.osvaldopina</groupId>
             <artifactId>signed-contract-base</artifactId>
-            <version>0.0.3</version>
+            <version>0.0.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.github.osvaldopina</groupId>
             <artifactId>signed-contract-json</artifactId>
-            <version>0.0.3</version>
+            <version>0.0.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.github.osvaldopina</groupId>
             <artifactId>signed-contract-uritemplate</artifactId>
-            <version>0.0.3</version>
+            <version>0.0.4-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
