@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.github.osvaldopina</groupId>
         <artifactId>signed-contract-impl</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.2</version>
     </parent>
 
     <artifactId>signed-contract-uritemplate</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <description>Signed contract for uritemplates</description>
 
     <dependencies>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.github.osvaldopina</groupId>
             <artifactId>signed-contract-base</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.2</version>
         </dependency>
         <dependency>
             <groupId>com.damnhandy</groupId>
