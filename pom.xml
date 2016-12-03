@@ -4,7 +4,7 @@
 
     <groupId>com.github.osvaldopina</groupId>
     <artifactId>signed-contract-parent</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.4</version>
     <packaging>pom</packaging>
     <name>signed-contract-parent</name>
     <url>https://github.com/osvaldopina/signed-contract</url>
@@ -39,7 +39,7 @@
         <connection>scm:git:git@github.com:osvaldopina/signed-contract</connection>
         <developerConnection>scm:git:git@github.com:osvaldopina/signed-contract</developerConnection>
         <url>git@github.com:osvaldopina/signed-contract</url>
-        <tag>HEAD</tag>
+        <tag>v0.0.4</tag>
     </scm>
 
     <modules>
