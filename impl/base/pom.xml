@@ -5,12 +5,12 @@
 	<parent>
 		 <groupId>com.github.osvaldopina</groupId>
 		<artifactId>signed-contract-impl</artifactId>
-		<version>0.0.2</version>
+		<version>0.0.3-SNAPSHOT</version>
 	</parent>
 	
     <groupId>com.github.osvaldopina</groupId>
 	<artifactId>signed-contract-base</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
 	<name>signed-contract-base</name>
 	<description>Signed contract base abstractions</description>
  
