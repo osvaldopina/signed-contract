@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
     <name>signed-contract-parent</name>
     <url>https://github.com/osvaldopina/signed-contract</url>
+    <description>Contract definition and enforcement</description>
 
     <distributionManagement>
         <snapshotRepository>
